@@ -1,15 +1,9 @@
 import { useLayoutEffect, useState } from 'react';
 import { Menu } from 'antd';
-import {
-  CustomerServiceOutlined,
-  SecurityScanOutlined,
-  LineChartOutlined,
-  FormOutlined,
-  UserOutlined,
-  LogoutOutlined,
-} from '@ant-design/icons';
+
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as S from './style';
+import { menuItems } from '../../utils/menuItems';
 
 type MenuInfo = {
   key: string;
@@ -21,11 +15,10 @@ type MenuData = {
   item: string;
 };
 
-const { SubMenu } = Menu;
-
 export function AsideMenu() {
   const handleLogout = () => {
     localStorage.setItem('accessToken', '');
+    window.location.reload();
   };
 
   const [menu, setMenu] = useState<MenuData>({
@@ -53,7 +46,9 @@ export function AsideMenu() {
       if (item === 'dashboard') {
         return handleMoveHome();
       }
-
+      if (item === 'logout') {
+        return handleLogout();
+      }
       setMenu({
         item,
         subMenu: '',
@@ -96,39 +91,8 @@ export function AsideMenu() {
         onOpenChange={handleChangeSubMenu}
         openKeys={[menu.subMenu ?? '']}
         selectedKeys={[menu.item]}
-      >
-        <Menu.Item key="dashboard" icon={<LineChartOutlined />}>
-          대시보드
-        </Menu.Item>
-
-        <Menu.Item key="admin" icon={<SecurityScanOutlined />}>
-          관리자 계정
-        </Menu.Item>
-
-        <Menu.Item key="users" icon={<UserOutlined />}>
-          회원
-        </Menu.Item>
-
-        <SubMenu
-          key="customer"
-          icon={<CustomerServiceOutlined />}
-          title="고객센터 관리"
-        >
-          <Menu.Item key="customer-inquiry">1:1 문의</Menu.Item>
-
-          <Menu.Item key="customer-faq">FAQ</Menu.Item>
-
-          <Menu.Item key="customer-notice">공지사항</Menu.Item>
-        </SubMenu>
-
-        <Menu.Item key="policy" icon={<FormOutlined />}>
-          약관 관리
-        </Menu.Item>
-
-        <Menu.Item onClick={handleLogout} icon={<LogoutOutlined />}>
-          로그아웃
-        </Menu.Item>
-      </Menu>
+        items={menuItems}
+      />
     </S.Sider>
   );
 }
