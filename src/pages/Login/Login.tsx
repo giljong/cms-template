@@ -1,8 +1,7 @@
-import { useLazyQuery, useQuery } from '@apollo/client';
+import { useState } from 'react';
 import { Form, Input, notification } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 
-import React, { useEffect, useRef, useState } from 'react';
 import { OtpInputModal } from '../../components/OtpInputModal';
 
 import * as S from './style';
@@ -14,24 +13,16 @@ type SubmitType = {
 
 export function Login() {
   const [visible, setVisible] = useState(false);
-  const [otp, setOtp] = useState<string[]>(['', '', '', '', '', '']);
-  const inputRef = useRef<HTMLInputElement[]>([]);
+
   const [form] = useForm<SubmitType>();
 
   const emailReg =
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-  const passwordReg =
-    /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 
   const handleCancel = () => {
-    setOtp((prev) => {
-      if (prev.length) {
-        prev.map((_v, i) => (prev[i] = ''));
-      }
-      return [...prev];
-    });
     setVisible(false);
   };
+
   const handleSubmit = (values: SubmitType) => {
     if (!values.email?.trim().length) {
       return notification.error({ message: '이메일을 입력해주세요' });
@@ -42,63 +33,28 @@ export function Login() {
     if (!values.password?.trim().length) {
       return notification.error({ message: '비밀번호를 입력해주세요' });
     }
-    if (!passwordReg.test(values.password)) {
-      return notification.error({
-        message:
-          '비밀번호는 특수문자 / 문자 / 숫자 포함 형태의 8~15자리로 입력해주세요',
-      });
-    }
     setVisible(true);
-    handleFocus(0);
-  };
-  const handleFocus = (idx: number) => {
-    inputRef.current[idx]!.focus();
   };
 
-  const handleFinish = () => {
+  const handleFinish = (otp: string[]) => {
     const userInfo: SubmitType = {
       email: form.getFieldValue('email'),
       password: form.getFieldValue('password'),
     };
     const code = otp.concat().join().replaceAll(',', '');
-    // createAccessToken({
-    //   variables: {
-    //     ...userInfo,
-    //     code,
-    //   },
-    // });
+
+    // TODO: 로그인 로직 구현
+    localStorage.setItem('accessToken', 'sdfjklasdjfkldsjf;aklsdjfkal');
+    return (window.location.href = '/');
   };
-
-  // createAccessToken
-  // const [createAccessToken, { loading }] = useLazyQuery<
-  //   CreateAccessTokenByAdminResponse,
-  //   CreateAccessTokenByAdminParams
-  // >(CREATE_ACCESS_TOKEN_BY_ADMIN, {
-  //   onCompleted: (data) => {
-  //     localStorage.setItem('accessToken', data.createAccessTokenByAdmin);
-  //     handleCancel();
-
-  //     return (window.location.href = '/');
-  //   },
-  //   onError: (e) => {
-  //     handleCancel();
-  //     notification.error({ message: e.message });
-  //   },
-  //   fetchPolicy: 'no-cache',
-  //   notifyOnNetworkStatusChange: true,
-  // });
 
   return (
     <S.Container>
       <OtpInputModal
-        visible={visible}
-        handleCancel={handleCancel}
-        handleFinish={handleFinish}
-        handleFocus={handleFocus}
-        setOtp={setOtp}
-        otp={otp}
-        inputRef={inputRef}
         loading={false}
+        visible={visible}
+        handleFinish={handleFinish}
+        onCancel={handleCancel}
       />
       <S.Wrapper>
         <S.FormWrap>

@@ -1,34 +1,72 @@
 import { Modal } from 'antd';
-import React, { useEffect } from 'react';
+import {
+  ChangeEvent,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import Loader from '../Loader';
+
 import * as S from './style';
 
 type Props = {
   visible: boolean;
-  handleCancel: () => void;
-  otp: string[];
   loading: boolean;
-  setOtp: React.Dispatch<React.SetStateAction<string[]>>;
-  handleFinish: () => void;
-  inputRef: React.MutableRefObject<HTMLInputElement[]>;
-  handleFocus: (idx: number) => void;
+  onCancel: () => void;
+  handleFinish: (otp: string[]) => void;
 };
 
 export function OtpInputModal({
   visible,
-  setOtp,
-  otp,
   loading,
-  handleCancel,
-  inputRef,
-  handleFocus,
+  onCancel,
   handleFinish,
 }: Props) {
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+
+  const inputRef = useRef<HTMLInputElement[]>([]);
+
+  const handleChangeInput =
+    (index: number) => (e: ChangeEvent<HTMLInputElement>) => {
+      setOtp((prev) => {
+        prev[index] = e.target.value;
+        return [...prev];
+      });
+      if (e.target.value.length > 0) {
+        if (index === 5) {
+          return;
+        }
+        handleFocus(index + 1);
+      }
+    };
+
+  const handleCancel = () => {
+    setOtp((prev) => {
+      if (prev.length) {
+        prev.map((_v, i) => (prev[i] = ''));
+      }
+      return [...prev];
+    });
+    onCancel();
+  };
+
+  const handleFocus = (idx: number) => {
+    inputRef.current[idx].focus();
+  };
+
   useEffect(() => {
     if (otp[5].length) {
-      handleFinish();
+      handleFinish(otp);
     }
-  }, [otp]);
+  }, [handleFinish, otp]);
+
+  useEffect(() => {
+    if (visible) {
+      handleFocus(0);
+    }
+  }, [visible]);
+
   return (
     <Modal
       visible={visible}
@@ -42,43 +80,30 @@ export function OtpInputModal({
       <S.ModalTitle>OTP 인증번호</S.ModalTitle>
       {loading && <Loader />}
       <S.OtpWrap>
-        {otp.map((v, i) => {
-          return (
-            <S.OtpInput
-              ref={(elem) => {
-                if (elem) {
-                  inputRef.current[i] = elem;
-                }
-              }}
-              key={i}
-              maxLength={1}
-              value={otp[i]}
-              pattern="[0-9]*"
-              inputMode="numeric"
-              onChange={(e) => {
-                setOtp((prev) => {
-                  prev[i] = e.target.value;
-                  return [...prev];
-                });
-                if (e.target.value.length > 0) {
-                  if (i === 5) {
-                    return;
-                  }
-                  handleFocus(i + 1);
-                }
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Backspace' && i !== 0 && !otp[i].length) {
-                  handleFocus(i - 1);
-                }
-                setOtp((prev) => {
-                  prev[i] = '';
-                  return [...prev];
-                });
-              }}
-            />
-          );
-        })}
+        {otp.map((v, i) => (
+          <S.OtpInput
+            ref={(elem) => {
+              if (elem) {
+                inputRef.current[i] = elem;
+              }
+            }}
+            key={i}
+            maxLength={1}
+            value={otp[i]}
+            pattern="[0-9]*"
+            inputMode="numeric"
+            onChange={handleChangeInput(i)}
+            onKeyDown={(e) => {
+              if (e.key === 'Backspace' && i !== 0 && !otp[i].length) {
+                handleFocus(i - 1);
+              }
+              setOtp((prev) => {
+                prev[i] = '';
+                return [...prev];
+              });
+            }}
+          />
+        ))}
       </S.OtpWrap>
     </Modal>
   );

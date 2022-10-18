@@ -18,7 +18,6 @@ export function Admin() {
   const [adminData, setAdminData] = useState<AdminType[]>([]);
   const [adminAuths, setAdminAuths] = useState<KindType[]>([]);
   const [secret, setSecret] = useState('');
-  const [otp, setOtp] = useState<string[]>(['', '', '', '', '', '']);
   const [otpModalVisible, setOtpModalVisible] = useState(false);
   const [qrModalVisible, setQrModalVisible] = useState(false);
   const [email, setEmail] = useState('');
@@ -33,7 +32,6 @@ export function Admin() {
     setSkip((e - 1) * take);
     setCurrent(e);
   };
-  const inputRef = useRef<HTMLInputElement[]>([]);
 
   const columns: ColumnsType<AdminType> = [
     {
@@ -144,12 +142,6 @@ export function Admin() {
   };
 
   const handleCancelOtp = () => {
-    setOtp((prev) => {
-      if (prev.length) {
-        prev.map((_v, i) => (prev[i] = ''));
-      }
-      return [...prev];
-    });
     setOtpModalVisible(false);
   };
 
@@ -162,7 +154,7 @@ export function Admin() {
     setOtpModalVisible(true);
   };
 
-  const handleFinish = () => {
+  const handleFinish = (otp: string[]) => {
     // setOtpSecret({
     //   variables: {
     //     email,
@@ -182,10 +174,6 @@ export function Admin() {
     //       notification.error({ message: e.message });
     //     });
     // }
-  };
-
-  const handleFocus = (idx: number) => {
-    inputRef.current[idx]!.focus();
   };
 
   const handleSearch = (value: { searchText?: string }) => {
@@ -338,14 +326,10 @@ export function Admin() {
         setOtpSecret={setSecret}
       />
       <OtpInputModal
-        handleCancel={handleCancelOtp}
-        visible={otpModalVisible}
-        handleFinish={handleFinish}
-        handleFocus={handleFocus}
-        inputRef={inputRef}
         loading={false}
-        otp={otp}
-        setOtp={setOtp}
+        visible={otpModalVisible}
+        onCancel={handleCancelOtp}
+        handleFinish={handleFinish}
       />
       <Divider>관리자 계정</Divider>
       <Form
