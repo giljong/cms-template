@@ -1,22 +1,25 @@
-import React, { useMemo, useRef } from 'react';
-import ReactQuill from 'react-quill';
+import React, { useCallback, useRef } from 'react';
+import ReactQuill, { Quill } from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 type Props = {
   state: string;
   setState: React.Dispatch<React.SetStateAction<string>>;
-  isNotice?: boolean;
 };
 
-export function Editor({ state, setState, isNotice }: Props) {
+const Image = Quill.import('formats/image');
+Image.className = 'img-width-100';
+Quill.register(Image, true);
+
+export function Editor({ state, setState }: Props) {
   const quillRef = useRef<ReactQuill>();
 
   // 이미지 업로드 있을 경우 사용
-  const handleImage = () => {
-    // const input = document.createElement('input');
-    // input.setAttribute('type', 'file');
-    // input.setAttribute('accept', 'image/*');
-    // input.click();
+  const handleImage = useCallback(() => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
     // input.addEventListener('change', async () => {
     //   const file = input.files?.length ? input.files[0] : null;
     //   if (file) {
@@ -27,7 +30,8 @@ export function Editor({ state, setState, isNotice }: Props) {
     //     });
     //   }
     // });
-  };
+  }, []);
+
   const modules = {
     toolbar: {
       // 툴바에 넣을 기능들을 순서대로 나열하면 된다.
@@ -41,7 +45,8 @@ export function Editor({ state, setState, isNotice }: Props) {
           { indent: '+1' },
           { align: [] },
         ],
-        ['link'],
+        ['link', 'image'],
+        ['clean'],
       ],
       handlers: {
         image: handleImage,

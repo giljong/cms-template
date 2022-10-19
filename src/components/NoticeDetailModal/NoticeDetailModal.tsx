@@ -175,7 +175,7 @@ export function NoticeDetailModal({
             />
           </TransformBox>
         </TransformBox>
-        <Editor state={content} setState={setContent} isNotice={true} />
+        <Editor state={content} setState={setContent} />
       </TransformBox>
     </Modal>
   );
