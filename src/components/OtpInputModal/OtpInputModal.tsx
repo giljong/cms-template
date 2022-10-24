@@ -1,11 +1,5 @@
 import { Modal } from 'antd';
-import {
-  ChangeEvent,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Loader from '../Loader';
 
 import * as S from './style';
@@ -30,10 +24,10 @@ export function OtpInputModal({
   const handleChangeInput =
     (index: number) => (e: ChangeEvent<HTMLInputElement>) => {
       setOtp((prev) => {
-        prev[index] = e.target.value;
+        prev[index] = e.target.value.replace(/\D/g, '');
         return [...prev];
       });
-      if (e.target.value.length > 0) {
+      if (e.target.value.replace(/\D/g, '').length > 0) {
         if (index === 5) {
           return;
         }
@@ -61,12 +55,6 @@ export function OtpInputModal({
     }
   }, [handleFinish, otp]);
 
-  useEffect(() => {
-    if (visible) {
-      handleFocus(0);
-    }
-  }, [visible]);
-
   return (
     <Modal
       visible={visible}
@@ -75,7 +63,6 @@ export function OtpInputModal({
       centered
       closable={false}
       width={800}
-      confirmLoading={loading}
     >
       <S.ModalTitle>OTP 인증번호</S.ModalTitle>
       {loading && <Loader />}
@@ -89,9 +76,8 @@ export function OtpInputModal({
             }}
             key={i}
             maxLength={1}
-            value={otp[i]}
-            pattern="[0-9]*"
-            inputMode="numeric"
+            value={v}
+            autoFocus={!i}
             onChange={handleChangeInput(i)}
             onKeyDown={(e) => {
               if (e.key === 'Backspace' && i !== 0 && !otp[i].length) {
