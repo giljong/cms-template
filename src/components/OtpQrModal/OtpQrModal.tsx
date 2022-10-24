@@ -65,6 +65,7 @@ export function OtpQrModal({
       onCancel={handleCancel}
       visible={visible}
       closable={false}
+      focusTriggerAfterClose={false}
     >
       <S.QRWrap>
         <Image src={imageUrl} />
