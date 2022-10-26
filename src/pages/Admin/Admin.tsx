@@ -11,7 +11,6 @@ import { OtpQrModal } from '../../components/OtpQrModal';
 import TransformBox from '../../components/TransformBox';
 import { AuthDescType, authDescColumns } from '../../utils/columns';
 import { AdminType } from '../../utils/columns/admin';
-import { getAuthName } from '../../utils/getAuthName';
 
 export function Admin() {
   const [visible, setVisible] = useState(false);
@@ -188,20 +187,6 @@ export function Admin() {
     setSkip(0);
     setCurrent(1);
     setSearchText(value.searchText ?? '');
-  };
-
-  const getAdminAuthDesc = () => {
-    const arr = adminAuths.map((v) => {
-      return {
-        ...v,
-
-        desc: `[${getAuthName(v.name.split('_')[1])}] ${
-          v.name.split('_')[0] === 'READ' ? '조회 가능' : '버튼 사용 가능'
-        }`,
-      };
-    });
-
-    setAuthDescData(arr);
   };
 
   // get admin list
