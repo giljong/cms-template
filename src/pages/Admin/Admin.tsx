@@ -11,6 +11,7 @@ import { OtpQrModal } from '../../components/OtpQrModal';
 import TransformBox from '../../components/TransformBox';
 import { AuthDescType, authDescColumns } from '../../utils/columns';
 import { AdminType } from '../../utils/columns/admin';
+import { getAuthName } from '../../utils/getAuthName';
 
 export function Admin() {
   const [visible, setVisible] = useState(false);
@@ -189,48 +190,6 @@ export function Admin() {
     setSearchText(value.searchText ?? '');
   };
 
-  const getAuthName = (name: string) => {
-    switch (name) {
-      case 'DASHBOARD':
-        return '대시보드';
-      case 'ADMIN':
-        return '관리자 계정';
-      case 'USER':
-        return '회원';
-      case 'INQUIRY':
-        return '1:1문의';
-      case 'GIVEAWAY':
-        return '경품 설정';
-      case 'BROADCAST':
-        return '방송 설정';
-      case 'ADVERTISEMENT':
-        return '광고 관리';
-      case 'WINNING':
-        return '당첨 결과';
-      case 'PARTNERSHIP':
-        return '제휴 문의';
-      case 'FAQ':
-        return 'FAQ';
-      case 'NOTICE':
-        return '공지사항';
-      case 'POLICY':
-        return '약관 관리';
-      case 'NOTIFICATION':
-        return '푸시알림';
-      case 'REGISTRATION':
-        return '발송내역 업로드';
-      case 'SPORT':
-        return '스포츠';
-      case 'STATIC':
-        return '유튜브 링크';
-      case 'YOUTUBE':
-        return '구독 확인 여부';
-
-      default:
-        return '마스터';
-    }
-  };
-
   const getAdminAuthDesc = () => {
     const arr = adminAuths.map((v) => {
       return {
@@ -241,7 +200,7 @@ export function Admin() {
         }`,
       };
     });
-    console.log(arr);
+
     setAuthDescData(arr);
   };
 

@@ -70,7 +70,6 @@ export function Editor({ state, setState }: Props) {
   //         range,
   //         `<p class="ql-align-center"><img src=${IMG_URL} alt="이미지 태그가 삽입됩니다." /></p>`,
   //       );
-  //       console.log({ IMG_URL, range, quill });
   //     }
   //   },
   //   onError: (e) => {
