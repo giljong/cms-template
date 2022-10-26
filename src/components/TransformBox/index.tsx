@@ -2,7 +2,7 @@ import React from 'react';
 import { Container } from './style';
 
 interface Props {
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode;
   flexDirection?: 'row' | 'column';
   width?: string;
   height?: string;
