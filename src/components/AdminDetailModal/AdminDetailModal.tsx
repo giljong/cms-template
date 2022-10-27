@@ -345,7 +345,6 @@ export function AdminDetailModal({
             <Popconfirm
               // onConfirm={() => deleteAdmin()}
               okText="삭제"
-              cancelText="취소"
               title="정말로 삭제하시겠습니까?"
             >
               <Button

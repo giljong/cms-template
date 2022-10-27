@@ -147,7 +147,6 @@ export function FaqDetailModal({
               <Popconfirm
                 title="삭제하시겠습니까?"
                 okText="삭제"
-                cancelText="취소"
                 onConfirm={handleDelete}
               >
                 <Button type="primary" danger>

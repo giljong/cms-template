@@ -23,7 +23,7 @@ export function Editor({ state, setState }: Props) {
     // input.addEventListener('change', async () => {
     //   const file = input.files?.length ? input.files[0] : null;
     //   if (file) {
-    //     uploadNoticeImage({
+    //     await uploadNoticeImage({
     //       variables: {
     //         file,
     //       },

@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ConfigProvider } from 'antd';
+import locale from 'antd/es/locale/ko_KR';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ConfigProvider locale={locale}>
+      <App />
+    </ConfigProvider>
   </React.StrictMode>,
   document.getElementById('root') as HTMLElement,
 );

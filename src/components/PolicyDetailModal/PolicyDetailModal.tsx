@@ -131,7 +131,7 @@ export function PolicyDetailModal({
             <Popconfirm
               title="정말 삭제하시겠습니까?"
               okText="삭제"
-              cancelText="취소"
+
               // onConfirm={() => deletePolicy()}
             >
               <Button type="primary" danger>
