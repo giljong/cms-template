@@ -44,7 +44,7 @@ export const Layout = styled(AntdLayout)<LayoutProps>`
 export const Sider = styled(AntdSider)`
   overflow: auto;
   height: 100vh;
-  position: fixed;
+  position: fixed !important;
 `;
 
 export const Content = styled(AntdContent)`

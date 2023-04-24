@@ -13,13 +13,13 @@ import { AuthDescType, authDescColumns } from '../../utils/columns';
 import { AdminType } from '../../utils/columns/admin';
 
 export function Admin() {
-  const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false);
   const [modalData, setModalData] = useState<AdminType>();
   const [adminData, setAdminData] = useState<AdminType[]>([]);
   const [adminAuths, setAdminAuths] = useState<KindType[]>([]);
   const [secret, setSecret] = useState('');
-  const [otpModalVisible, setOtpModalVisible] = useState(false);
-  const [qrModalVisible, setQrModalVisible] = useState(false);
+  const [otpModalopen, setOtpModalopen] = useState(false);
+  const [qrModalopen, setQrModalopen] = useState(false);
   const [email, setEmail] = useState('');
   const [take, setTake] = useState(10);
   const [skip, setSkip] = useState(0);
@@ -97,7 +97,7 @@ export function Admin() {
               onClick={(e) => {
                 e.stopPropagation();
                 setEmail(record.email);
-                setQrModalVisible(true);
+                setQrModalopen(true);
               }}
             >
               {val?.length ? '재설정' : '설정'}
@@ -128,30 +128,30 @@ export function Admin() {
   ];
 
   const handleCancel = () => {
-    setVisible(false);
+    setOpen(false);
   };
 
   const handleClick = () => {
-    setVisible(true);
+    setOpen(true);
     setModalData(undefined);
   };
 
   const handleRow = (record: AdminType) => {
-    setVisible(true);
+    setOpen(true);
     setModalData(record);
   };
 
   const handleCancelOtp = () => {
-    setOtpModalVisible(false);
+    setOtpModalopen(false);
   };
 
   const handleCancelQr = () => {
-    setQrModalVisible(false);
+    setQrModalopen(false);
   };
 
   const handleNext = () => {
     handleCancelQr();
-    setOtpModalVisible(true);
+    setOtpModalopen(true);
   };
 
   const handleFinish = (otp: string[]) => {
@@ -255,14 +255,14 @@ export function Admin() {
   return (
     <>
       <AdminDetailModal
-        visible={visible}
+        open={open}
         handleCancel={handleCancel}
         admin={modalData}
         refetch={handleRefetch}
         adminRoles={adminAuths}
       />
       <OtpQrModal
-        visible={qrModalVisible}
+        open={qrModalopen}
         handleCancel={handleCancelQr}
         handleNext={handleNext}
         email={email}
@@ -271,7 +271,7 @@ export function Admin() {
       />
       <OtpInputModal
         loading={false}
-        visible={otpModalVisible}
+        open={otpModalopen}
         onCancel={handleCancelOtp}
         handleFinish={handleFinish}
       />

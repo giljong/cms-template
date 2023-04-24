@@ -20,7 +20,7 @@ export const OtpInput = styled.input`
   font-size: 46px;
   text-align: center;
   padding: 10px;
-  &:focus-visible {
+  &:focus-open {
     outline: none;
     padding: 0px;
     margin: 0px;

@@ -7,7 +7,7 @@ import { Editor } from '../Editor';
 import TransformBox from '../TransformBox';
 
 type Props = {
-  visible: boolean;
+  open: boolean;
   handleCancel: () => void;
   isEdit: boolean;
   data: FaqType | undefined;
@@ -16,7 +16,7 @@ type Props = {
 };
 
 export function FaqDetailModal({
-  visible,
+  open,
   handleCancel,
   isEdit,
   data,
@@ -120,11 +120,11 @@ export function FaqDetailModal({
       setAnswer('');
       setFaqKindId(faqKind[0]?.id);
     }
-  }, [visible]);
+  }, [open]);
 
   return (
     <Modal
-      visible={visible}
+      open={open}
       onCancel={handleCancel}
       width={1000}
       closable={false}

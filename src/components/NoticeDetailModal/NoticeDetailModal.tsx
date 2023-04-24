@@ -7,7 +7,7 @@ import { Editor } from '../Editor';
 import TransformBox from '../TransformBox';
 
 type Props = {
-  visible: boolean;
+  open: boolean;
   handleCancel: () => void;
   isEdit: boolean;
   data: NoticeType | undefined;
@@ -15,7 +15,7 @@ type Props = {
 };
 
 export function NoticeDetailModal({
-  visible,
+  open,
   handleCancel,
   isEdit,
   data,
@@ -118,11 +118,11 @@ export function NoticeDetailModal({
       setContent(' ');
       setisFix(false);
     }
-  }, [visible]);
+  }, [open]);
 
   return (
     <Modal
-      visible={visible}
+      open={open}
       onCancel={handleCancel}
       width={1000}
       closable={false}

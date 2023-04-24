@@ -7,7 +7,7 @@ import { Editor } from '../Editor';
 import TransformBox from '../TransformBox';
 
 type Props = {
-  visible: boolean;
+  open: boolean;
   handleCancel: () => void;
   isEdit: boolean;
   data: PolicyType | undefined;
@@ -16,7 +16,7 @@ type Props = {
 };
 
 export function PolicyDetailModal({
-  visible,
+  open,
   handleCancel,
   isEdit,
   data,
@@ -104,11 +104,11 @@ export function PolicyDetailModal({
       setPolicyKindId(policyKind[0]?.id);
       setContent('');
     }
-  }, [visible]);
+  }, [open]);
 
   return (
     <Modal
-      visible={visible}
+      open={open}
       onCancel={handleCancel}
       width={1000}
       closable={false}

@@ -12,7 +12,7 @@ type SubmitType = {
 };
 
 export function Login() {
-  const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const [form] = useForm<SubmitType>();
 
@@ -20,7 +20,7 @@ export function Login() {
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
   const handleCancel = () => {
-    setVisible(false);
+    setOpen(false);
   };
 
   const handleSubmit = (values: SubmitType) => {
@@ -33,7 +33,7 @@ export function Login() {
     if (!values.password?.trim().length) {
       return notification.error({ message: '비밀번호를 입력해주세요' });
     }
-    setVisible(true);
+    setOpen(true);
   };
 
   const handleFinish = (otp: string[]) => {
@@ -52,7 +52,7 @@ export function Login() {
     <S.Container>
       <OtpInputModal
         loading={false}
-        visible={visible}
+        open={open}
         handleFinish={handleFinish}
         onCancel={handleCancel}
       />

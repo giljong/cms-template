@@ -9,7 +9,7 @@ import { PolicyType, policyColumns } from '../../utils/columns';
 export function Policy() {
   const [policyData, setPolicyData] = useState<PolicyType[]>([]);
   const [policyKind, setPolicyKind] = useState<KindType[]>([]);
-  const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [modalData, setModalData] = useState<PolicyType>();
   const [take, setTake] = useState(10);
@@ -24,18 +24,18 @@ export function Policy() {
   };
 
   const handleClick = () => {
-    setVisible(true);
+    setOpen(true);
     setIsEdit(false);
   };
 
   const handleRow = (record: PolicyType) => {
-    setVisible(true);
+    setOpen(true);
     setIsEdit(true);
     setModalData(record);
   };
 
   const handleCancel = () => {
-    setVisible(false);
+    setOpen(false);
   };
 
   const handleRefetch = () => {
@@ -106,7 +106,7 @@ export function Policy() {
       <PolicyDetailModal
         data={modalData}
         handleCancel={handleCancel}
-        visible={visible}
+        open={open}
         isEdit={isEdit}
         refetch={handleRefetch}
         policyKind={policyKind}

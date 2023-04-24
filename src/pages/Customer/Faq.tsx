@@ -8,7 +8,7 @@ import { FaqType, faqColumns } from '../../utils/columns';
 
 export function Faq() {
   const [faqData, setFaqData] = useState<FaqType[]>([]);
-  const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [modalData, setModalData] = useState<FaqType>();
   const [take, setTake] = useState(10);
@@ -24,18 +24,18 @@ export function Faq() {
   };
 
   const handleClick = () => {
-    setVisible(true);
+    setOpen(true);
     setIsEdit(false);
   };
 
   const handleRow = (record: FaqType) => {
-    setVisible(true);
+    setOpen(true);
     setIsEdit(true);
     setModalData(record);
   };
 
   const handleCancel = () => {
-    setVisible(false);
+    setOpen(false);
   };
 
   const handleRefetch = () => {
@@ -110,7 +110,7 @@ export function Faq() {
   return (
     <>
       <FaqDetailModal
-        visible={visible}
+        open={open}
         data={modalData}
         handleCancel={handleCancel}
         isEdit={isEdit}

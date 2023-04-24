@@ -24,7 +24,7 @@ export type SubmitType = {
 };
 
 type Props = {
-  visible: boolean;
+  open: boolean;
   handleCancel: () => void;
   admin?: any;
   refetch: () => void;
@@ -33,7 +33,7 @@ type Props = {
 
 export function AdminDetailModal({
   handleCancel,
-  visible,
+  open,
   admin,
   refetch,
   adminRoles,
@@ -264,10 +264,10 @@ export function AdminDetailModal({
       });
       setPasswordChange(false);
     }
-  }, [visible]);
+  }, [open]);
   return (
     <Modal
-      visible={visible}
+      open={open}
       onCancel={handleCancel}
       title="관리자 생성"
       centered

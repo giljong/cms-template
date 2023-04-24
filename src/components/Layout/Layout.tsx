@@ -3,6 +3,7 @@ import React from 'react';
 import * as S from './style';
 import Main from '../Main';
 import { AsideMenu } from '../AsideMenu';
+import { PRIMARY } from '../../styles/colors';
 
 export type BadgeType = {
   [index: string]: number;

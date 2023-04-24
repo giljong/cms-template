@@ -6,6 +6,7 @@ export const ChartContainer = styled.div`
   grid-template-columns: repeat(2, 1fr);
   row-gap: 30px;
   margin-bottom: 50px;
+
   @media only screen and (max-width: 768px) {
     grid-template-columns: repeat(1, 1fr);
     row-gap: 30px;

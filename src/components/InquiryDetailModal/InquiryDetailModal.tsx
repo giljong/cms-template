@@ -10,13 +10,13 @@ import TransformBox from '../TransformBox';
 
 type Props = {
   handleCancel: () => void;
-  visible: boolean;
+  open: boolean;
   data: InquiryType | undefined;
   refetch: () => void;
 };
 
 export function InquiryDetailModal({
-  visible,
+  open,
   handleCancel,
   data,
   refetch,
@@ -63,11 +63,11 @@ export function InquiryDetailModal({
     } else {
       setReply('');
     }
-  }, [visible]);
+  }, [open]);
 
   return (
     <Modal
-      visible={visible}
+      open={open}
       onCancel={handleCancel}
       footer={false}
       centered

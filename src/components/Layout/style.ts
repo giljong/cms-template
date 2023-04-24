@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Layout as AntdLayout } from 'antd';
+import { PRIMARY } from '../../styles/colors';
 
 const {
   Sider: AntdSider,
@@ -17,6 +18,7 @@ type LayoutProps = {
 export const Layout = styled(AntdLayout)<LayoutProps>`
   margin-left: ${(props) => (props.$marginLeft ? props.$marginLeft : 0)}px;
   min-height: 100vh;
+
   @media only screen and (max-width: 740px) {
     margin-left: 0px;
   }
@@ -27,6 +29,7 @@ export const Sider = styled(AntdSider)`
   height: 100vh;
   position: fixed;
   left: 0;
+  background-color: ${PRIMARY} !important;
 `;
 
 export const Content = styled(AntdContent)`

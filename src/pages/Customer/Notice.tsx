@@ -9,7 +9,7 @@ import { noticeColumns, NoticeType } from '../../utils/columns';
 export function Notice() {
   const [noticeData, setNoticeData] = useState<NoticeType[]>([]);
   const [modalData, setModalData] = useState<NoticeType>();
-  const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [take, setTake] = useState(10);
   const [skip, setSkip] = useState(0);
@@ -23,18 +23,18 @@ export function Notice() {
   };
 
   const handleClick = () => {
-    setVisible(true);
+    setOpen(true);
     setIsEdit(false);
   };
 
   const handleRow = (record: NoticeType) => {
-    setVisible(true);
+    setOpen(true);
     setIsEdit(true);
     setModalData(record);
   };
 
   const handleCancel = () => {
-    setVisible(false);
+    setOpen(false);
   };
 
   const handleRefetch = () => {
@@ -97,7 +97,7 @@ export function Notice() {
     <>
       <NoticeDetailModal
         data={modalData}
-        visible={visible}
+        open={open}
         handleCancel={handleCancel}
         isEdit={isEdit}
         refetch={handleRefetch}

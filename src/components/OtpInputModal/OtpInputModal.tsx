@@ -5,14 +5,14 @@ import Loader from '../Loader';
 import * as S from './style';
 
 type Props = {
-  visible: boolean;
+  open: boolean;
   loading: boolean;
   onCancel: () => void;
   handleFinish: (otp: string[]) => void;
 };
 
 export function OtpInputModal({
-  visible,
+  open,
   loading,
   onCancel,
   handleFinish,
@@ -57,7 +57,7 @@ export function OtpInputModal({
 
   return (
     <Modal
-      visible={visible}
+      open={open}
       onCancel={handleCancel}
       footer={false}
       centered

@@ -6,14 +6,14 @@ import { UserType } from '../../utils/columns';
 import { UserInquiryHistory } from '../UserInquiryHistory/UserInquiryHistory';
 
 type Props = {
-  visible: boolean;
+  open: boolean;
   email: string;
   handleCancel: () => void;
 };
 
 const { TabPane } = Tabs;
 
-export function UserDetailModal({ email, handleCancel, visible }: Props) {
+export function UserDetailModal({ email, handleCancel, open }: Props) {
   const [user, setUser] = useState<UserType>();
   const [selectedKey, setSeletedKey] = useState('1');
 
@@ -32,7 +32,7 @@ export function UserDetailModal({ email, handleCancel, visible }: Props) {
   // });
 
   useEffect(() => {
-    if (visible) {
+    if (open) {
       // seeUserDetail({
       //   variables: {
       //     email,
@@ -40,10 +40,10 @@ export function UserDetailModal({ email, handleCancel, visible }: Props) {
       // });
     }
     setSeletedKey('1');
-  }, [visible]);
+  }, [open]);
   return (
     <Modal
-      visible={visible}
+      open={open}
       onCancel={handleCancel}
       footer={false}
       title={`${user?.nickname}의 상세정보`}

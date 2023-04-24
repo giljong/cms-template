@@ -6,7 +6,7 @@ import * as S from './style';
 
 type Props = {
   email: string;
-  visible: boolean;
+  open: boolean;
   handleCancel: () => void;
   handleNext: () => void;
   otpSecret: string;
@@ -15,7 +15,7 @@ type Props = {
 
 export function OtpQrModal({
   email,
-  visible,
+  open,
   handleNext,
   handleCancel,
   otpSecret,
@@ -49,21 +49,21 @@ export function OtpQrModal({
   // });
 
   useEffect(() => {
-    if (email.length && visible === true) {
+    if (email.length && open === true) {
       // getOtpQr({
       //   variables: {
       //     email,
       //   },
       // });
     }
-  }, [visible]);
+  }, [open]);
 
   return (
     <Modal
       centered
       footer={false}
       onCancel={handleCancel}
-      visible={visible}
+      open={open}
       closable={false}
       focusTriggerAfterClose={false}
     >

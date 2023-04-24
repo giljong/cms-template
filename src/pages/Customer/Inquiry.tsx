@@ -9,8 +9,8 @@ import { UserDetailModal } from '../../components/UserDetailModal';
 import { InquiryType } from '../../utils/columns';
 
 export function Inquiry() {
-  const [visible, setVisible] = useState(false);
-  const [detailModalVisible, setDetailModalVisible] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [detailModalopen, setDetailModalopen] = useState(false);
   const [modalData, setModalData] = useState<InquiryType>();
   const [inquiryData, setInquiryData] = useState<InquiryType[]>([]);
   const [take, setTake] = useState(10);
@@ -50,7 +50,7 @@ export function Inquiry() {
           <Button
             type="link"
             onClick={(e) => {
-              setVisible(true);
+              setOpen(true);
               setModalData(record);
               e.stopPropagation();
             }}
@@ -100,16 +100,16 @@ export function Inquiry() {
   };
 
   const handleCancel = () => {
-    setVisible(false);
+    setOpen(false);
   };
 
   const handleRow = (data: InquiryType) => {
-    setDetailModalVisible(true);
+    setDetailModalopen(true);
     setModalData(data);
   };
 
   const handleCancelDetail = () => {
-    setDetailModalVisible(false);
+    setDetailModalopen(false);
   };
 
   const handleSearch = (values: { searchText?: string }) => {
@@ -168,12 +168,12 @@ export function Inquiry() {
     <>
       <UserDetailModal
         handleCancel={handleCancel}
-        visible={visible}
+        open={open}
         email={modalData?.user?.email ?? ''}
       />
       <InquiryDetailModal
         data={modalData}
-        visible={detailModalVisible}
+        open={detailModalopen}
         handleCancel={handleCancelDetail}
         refetch={handleRefetch}
       />

@@ -7,7 +7,7 @@ import { UserType, userListColumns } from '../../utils/columns';
 
 export function Users() {
   const [userData, setUserData] = useState<UserType[]>([]);
-  const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false);
   const [modalData, setModalData] = useState<UserType>();
   const [take, setTake] = useState(10);
   const [skip, setSkip] = useState(0);
@@ -16,12 +16,12 @@ export function Users() {
   const [searchText, setSearchText] = useState('');
 
   const handleCancel = () => {
-    setVisible(false);
+    setOpen(false);
   };
 
   const handleClickRow = (rec: UserType) => {
     setModalData(rec);
-    setVisible(true);
+    setOpen(true);
   };
 
   const handleSearch = (value: { searchText?: string }) => {
@@ -71,7 +71,7 @@ export function Users() {
   return (
     <>
       <UserDetailModal
-        visible={visible}
+        open={open}
         handleCancel={handleCancel}
         email={modalData?.email ?? ''}
       />
