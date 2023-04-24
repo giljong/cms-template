@@ -1,14 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ConfigProvider } from 'antd';
+import { ConfigProvider, theme } from 'antd';
 import locale from 'antd/es/locale/ko_KR';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { PRIMARY } from './styles/colors';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ConfigProvider locale={locale}>
+    <ConfigProvider
+      locale={locale}
+      theme={{
+        token: {
+          colorPrimary: PRIMARY,
+          colorPrimaryBg: PRIMARY,
+        },
+        algorithm: [theme.defaultAlgorithm],
+        components: {
+          Layout: {
+            colorBgHeader: PRIMARY,
+          },
+          Menu: {
+            colorItemBg: PRIMARY,
+            colorSubItemBg: PRIMARY,
+          },
+        },
+      }}
+    >
       <App />
     </ConfigProvider>
   </React.StrictMode>,

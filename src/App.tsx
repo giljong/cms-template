@@ -1,4 +1,3 @@
-import 'antd/dist/antd.less';
 import Root from './router';
 
 function App() {
