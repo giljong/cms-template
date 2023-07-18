@@ -7,6 +7,7 @@ import { Dashboard } from '../pages/Dashboard';
 import { Login } from '../pages/Login';
 import { Policy } from '../pages/Policy';
 import { Users } from '../pages/Users';
+import { PasswordChange } from '../pages/PasswordChange/PasswordChange';
 
 function Root() {
   const accessToken = localStorage.getItem('accessToken') ?? '';
@@ -29,6 +30,7 @@ function Root() {
               <Route path="notice" element={<Notice />} />
             </Route>
             <Route path="policy" element={<Policy />} />
+            <Route path="password" element={<PasswordChange />} />
           </Route>
         )}
         {!accessToken?.length && (

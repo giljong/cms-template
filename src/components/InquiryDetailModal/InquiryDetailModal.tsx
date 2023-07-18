@@ -1,17 +1,14 @@
 import { Button, Input, Modal, notification, Image } from 'antd';
 import React, { useEffect, useState } from 'react';
 import * as S from './style';
-
 import moment from 'moment';
-
 import { useMutation } from '@apollo/client';
-import { InquiryType } from '../../utils/columns';
 import TransformBox from '../TransformBox';
 
 type Props = {
   handleCancel: () => void;
   open: boolean;
-  data: InquiryType | undefined;
+  data: any | undefined;
   refetch: () => void;
 };
 
@@ -93,7 +90,7 @@ export function InquiryDetailModal({
             width={'100%'}
             justifyContent="space-between"
           >
-            {data.inquiryImages.map((v) => {
+            {data.inquiryImages.map((v: any) => {
               return (
                 <Image
                   src={`${process.env.REACT_APP_INQUIRY_IMAGE_URL}/${v.name}`}

@@ -2,7 +2,7 @@ import { useLazyQuery } from '@apollo/client';
 import { Descriptions, Modal, notification, Tabs } from 'antd';
 
 import React, { useEffect, useState } from 'react';
-import { UserType } from '../../utils/columns';
+
 import { UserInquiryHistory } from '../UserInquiryHistory/UserInquiryHistory';
 
 type Props = {
@@ -14,30 +14,12 @@ type Props = {
 const { TabPane } = Tabs;
 
 export function UserDetailModal({ email, handleCancel, open }: Props) {
-  const [user, setUser] = useState<UserType>();
+  const [user, setUser] = useState<any>();
   const [selectedKey, setSeletedKey] = useState('1');
-
-  // get user detail information
-  // const [seeUserDetail] = useLazyQuery<
-  //   SeeUserDetailByAdminResponse,
-  //   SeeUserDetailByAdminParams
-  // >(SEE_USER_DETAIL_BY_ADMIN, {
-  //   onCompleted: (data) => {
-  //     setUser(data.seeUserDetailByAdmin);
-  //   },
-  //   onError: (e) => {
-  //     notification.error({ message: e.message });
-  //   },
-  //   fetchPolicy: 'no-cache',
-  // });
 
   useEffect(() => {
     if (open) {
-      // seeUserDetail({
-      //   variables: {
-      //     email,
-      //   },
-      // });
+      // 유저 상세조회
     }
     setSeletedKey('1');
   }, [open]);
@@ -82,8 +64,8 @@ export function UserDetailModal({ email, handleCancel, open }: Props) {
             <Descriptions.Item label="주소" span={24}>
               {user && user.shippingAddresses.length > 0
                 ? user.shippingAddresses
-                    .filter((v) => v.isDefault)
-                    .map((v) => {
+                    .filter((v: any) => v.isDefault)
+                    .map((v: any) => {
                       return v.address.length
                         ? v.address + ' ' + v.addressDetail
                         : '배송지가 존재하지 않습니다.';

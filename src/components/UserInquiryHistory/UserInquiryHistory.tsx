@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { notification, Table } from 'antd';
+import { Table } from 'antd';
 
 import { useLazyQuery } from '@apollo/client';
-import { InquiryType, userInquiryColumns } from '../../utils/columns';
+import { userInquiryColumns } from '../../utils/columns';
 
 type Props = {
   email: string;
@@ -10,8 +10,7 @@ type Props = {
 };
 
 export function UserInquiryHistory({ email, selectedKey }: Props) {
-  const [inquiryData, setInquiryData] = useState<InquiryType[]>([]);
-  const [take, setTake] = useState(10);
+  const [inquiryData, setInquiryData] = useState<any[]>([]);
   const [skip, setSkip] = useState(0);
   const [current, setCurrent] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
@@ -21,30 +20,8 @@ export function UserInquiryHistory({ email, selectedKey }: Props) {
     setSkip((e - 1) * 10);
   };
 
-  // get user's inquiry
-  // const [getInquire, { loading }] = useLazyQuery<
-  //   SeeUserInquiryHistoryResponse,
-  //   SeeUserInquiryHistoryParams
-  // >(SEE_USER_INQUIRY_HISTORY_BY_ADMIN, {
-  //   onCompleted: (data) => {
-  //     setInquiryData(data.seeUserInquiryHistoryByAdmin.inquiries);
-  //     setTotalCount(data.seeUserInquiryHistoryByAdmin.totalCount);
-  //   },
-  //   onError: (e) => {
-  //     notification.error({ message: e.message });
-  //   },
-  //   fetchPolicy: 'no-cache',
-  // });
-
   useEffect(() => {
     if (selectedKey === '2') {
-      // getInquire({
-      //   variables: {
-      //     take,
-      //     skip,
-      //     email,
-      //   },
-      // });
     }
   }, [skip, selectedKey]);
 

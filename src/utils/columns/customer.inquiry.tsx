@@ -1,8 +1,14 @@
-import { Tag } from 'antd';
+import { Button, Tag } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import moment from 'moment';
 
-export const dashboardInquiryColumns: ColumnsType<any> = [
+type Props = {
+  handleClickName: (record: any) => void;
+};
+
+export const customerInquiryColumns = ({
+  handleClickName,
+}: Props): ColumnsType<any> => [
   {
     title: 'no',
     key: 'id',
@@ -10,7 +16,16 @@ export const dashboardInquiryColumns: ColumnsType<any> = [
     align: 'center',
   },
   {
-    title: '질문',
+    title: '문의 종류',
+    key: 'inquiryKind',
+    dataIndex: 'inquiryKind',
+    align: 'center',
+    render: (val) => {
+      return val.name;
+    },
+  },
+  {
+    title: '문의내용',
     key: 'content',
     dataIndex: 'content',
     align: 'center',
@@ -19,8 +34,18 @@ export const dashboardInquiryColumns: ColumnsType<any> = [
     title: '닉네임',
     key: 'user',
     dataIndex: 'user',
-    render: (val) => {
-      return val.name;
+    render: (val, record) => {
+      return (
+        <Button
+          type="link"
+          onClick={(e) => {
+            handleClickName(record);
+            e.stopPropagation();
+          }}
+        >
+          {val.nickname}
+        </Button>
+      );
     },
     align: 'center',
   },

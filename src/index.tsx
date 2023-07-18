@@ -1,37 +1,28 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { ConfigProvider, theme } from 'antd';
+import * as ReactDOM from 'react-dom/client';
+import { ConfigProvider } from 'antd';
 import locale from 'antd/es/locale/ko_KR';
+import localeEn from 'antd/es/locale/en_US';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { PRIMARY } from './styles/colors';
+import { RecoilRoot } from 'recoil';
 
-ReactDOM.render(
-  <React.StrictMode>
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement,
+);
+
+root.render(
+  <RecoilRoot>
     <ConfigProvider
-      locale={locale}
-      theme={{
-        token: {
-          colorPrimary: PRIMARY,
-          colorPrimaryBg: PRIMARY,
-        },
-        algorithm: [theme.defaultAlgorithm],
-        components: {
-          Layout: {
-            colorBgHeader: PRIMARY,
-          },
-          Menu: {
-            colorItemBg: PRIMARY,
-            colorSubItemBg: PRIMARY,
-          },
-        },
+      locale={{
+        ...locale,
+        Pagination: localeEn.Pagination,
       }}
     >
       <App />
     </ConfigProvider>
-  </React.StrictMode>,
-  document.getElementById('root') as HTMLElement,
+  </RecoilRoot>,
 );
 
 // If you want to start measuring performance in your app, pass a function

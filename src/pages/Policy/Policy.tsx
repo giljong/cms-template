@@ -1,34 +1,28 @@
-import { Button, Divider, Form, Input, notification, Table } from 'antd';
+import { Button, Divider, Form, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { useLazyQuery, useQuery } from '@apollo/client';
-
+import { useRecoilState } from 'recoil';
 import { PolicyDetailModal } from '../../components/PolicyDetailModal';
 import TransformBox from '../../components/TransformBox';
-import { PolicyType, policyColumns } from '../../utils/columns';
+import { policyColumns } from '../../utils/columns';
+import { pageOptionState } from '../../recoil/atoms/pageOptions';
+import { CustomTable } from '../../components/CustomTable';
 
 export function Policy() {
-  const [policyData, setPolicyData] = useState<PolicyType[]>([]);
+  const [policyData, setPolicyData] = useState<any[]>([]);
   const [policyKind, setPolicyKind] = useState<KindType[]>([]);
   const [open, setOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
-  const [modalData, setModalData] = useState<PolicyType>();
-  const [take, setTake] = useState(10);
-  const [skip, setSkip] = useState(0);
-  const [totalCount, setTotalCount] = useState(0);
-  const [current, setCurrent] = useState(1);
-  const [searchText, setSearchText] = useState('');
+  const [modalData, setModalData] = useState<any>();
+  const [searchWord, setSearchWord] = useState('');
 
-  const handlePagination = (e: number) => {
-    setSkip((e - 1) * take);
-    setCurrent(e);
-  };
+  const [pageOption, setPageOption] = useRecoilState(pageOptionState);
 
   const handleClick = () => {
     setOpen(true);
     setIsEdit(false);
   };
 
-  const handleRow = (record: PolicyType) => {
+  const handleRow = (record: any) => {
     setOpen(true);
     setIsEdit(true);
     setModalData(record);
@@ -38,68 +32,13 @@ export function Policy() {
     setOpen(false);
   };
 
-  const handleRefetch = () => {
-    // if (refetch) {
-    //   refetch()
-    //     .then((data) => {
-    //       setPolicyData(data.data.seePolicyHistoryByAdmin.policies);
-    //       setTotalCount(data.data.seePolicyHistoryByAdmin.totalCount);
-    //     })
-    //     .catch((e) => {
-    //       notification.error({ message: e.message });
-    //     });
-    // }
+  const handleSearch = (value: { searchWord?: string }) => {
+    setPageOption({ ...pageOption, current: 1, skip: 0 });
+    setSearchWord(value.searchWord ?? '');
   };
-
-  const handleSearch = (value: { searchText?: string }) => {
-    // getPolicies({
-    //   variables: {
-    //     searchText: value.searchText,
-    //     skip: 0,
-    //     take,
-    //   },
-    // });
-    setSkip(0);
-    setCurrent(1);
-    setSearchText(value.searchText ?? '');
-  };
-
-  // get policy list
-  // const [getPolicies, { refetch, loading }] = useLazyQuery<
-  //   SeePolicyHistoryByAdminResponse,
-  //   SeePolicyHistoryByAdminParams
-  // >(SEE_POLICY_HISTORY_BY_ADMIN, {
-  //   onCompleted: (data) => {
-  //     setPolicyData(data.seePolicyHistoryByAdmin.policies);
-  //     setTotalCount(data.seePolicyHistoryByAdmin.totalCount);
-  //   },
-  //   onError: (e) => {
-  //     notification.error({ message: e.message });
-  //   },
-  //   fetchPolicy: 'no-cache',
-  // });
-
-  // get policy kind list
-  // useQuery<SeePolicyKindResponse>(SEE_POLICY_KIND, {
-  //   onCompleted: (data) => {
-  //     setPolicyKind(data.seePolicyKind);
-  //   },
-  //   onError: (e) => {
-  //     notification.error({ message: e.message });
-  //   },
-  //   fetchPolicy: 'no-cache',
-  // });
 
   // pagination
-  // useEffect(() => {
-  //   getPolicies({
-  //     variables: {
-  //       skip,
-  //       take,
-  //       searchText,
-  //     },
-  //   });
-  // }, [take, skip]);
+  useEffect(() => {}, [pageOption.take, pageOption.skip]);
 
   return (
     <>
@@ -108,17 +47,17 @@ export function Policy() {
         handleCancel={handleCancel}
         open={open}
         isEdit={isEdit}
-        refetch={handleRefetch}
+        refetch={() => {}}
         policyKind={policyKind}
       />
       <Divider>약관 관리</Divider>
       <Form layout="inline" onFinish={handleSearch}>
-        <Form.Item name="searchText">
+        <Form.Item name="searchWord">
           <Input.Search
             enterButton
             placeholder="검색어(종류, 내용)"
             onSearch={(e) => {
-              handleSearch({ searchText: e });
+              handleSearch({ searchWord: e });
             }}
           />
         </Form.Item>
@@ -130,21 +69,13 @@ export function Policy() {
         </Button>
       </TransformBox>
 
-      <Table
+      <CustomTable
         columns={policyColumns}
         dataSource={policyData}
         onRow={(rec) => {
           return {
             onClick: () => handleRow(rec),
           };
-        }}
-        pagination={{
-          position: ['bottomCenter'],
-          showSizeChanger: true,
-          onChange: handlePagination,
-          onShowSizeChange: (_current, size) => setTake(size),
-          total: totalCount,
-          current: current,
         }}
         // loading={loading}
         rowKey={(rec) => rec.id}

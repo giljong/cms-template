@@ -1,9 +1,11 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { Menu } from 'antd';
 
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as S from './style';
-import { menuItems } from '../../utils/menuItems';
+import { getMenuItem } from '../../utils/menuItems';
+import { pageOptionState } from '../../recoil/atoms/pageOptions';
+import { useRecoilState } from 'recoil';
 
 type MenuInfo = {
   key: string;
@@ -16,18 +18,20 @@ type MenuData = {
 };
 
 export function AsideMenu() {
-  const handleLogout = () => {
-    localStorage.setItem('accessToken', '');
-    window.location.reload();
-  };
-
   const [menu, setMenu] = useState<MenuData>({
     subMenu: '',
     item: '',
   });
 
+  const [, setPageOption] = useRecoilState(pageOptionState);
+
   const navigator = useNavigate();
   const { pathname } = useLocation();
+
+  const handleLogout = () => {
+    localStorage.setItem('accessToken', '');
+    window.location.reload();
+  };
 
   const handleMoveHome = () => {
     navigator('/');
@@ -78,6 +82,15 @@ export function AsideMenu() {
     setMenu({ item: `${subMenu}-${item}`, subMenu });
   }, [pathname]);
 
+  useEffect(() => {
+    setPageOption({
+      current: 1,
+      skip: 0,
+      take: 10,
+      total: 0,
+    });
+  }, [pathname]);
+
   return (
     <S.Sider>
       <S.ImageWrap onClick={handleMoveHome}>
@@ -91,7 +104,7 @@ export function AsideMenu() {
         onOpenChange={handleChangeSubMenu}
         openKeys={[menu.subMenu ?? '']}
         selectedKeys={[menu.item]}
-        items={menuItems}
+        items={getMenuItem(['MASTER'])}
       />
     </S.Sider>
   );

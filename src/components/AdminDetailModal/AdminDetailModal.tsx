@@ -267,7 +267,7 @@ export function AdminDetailModal({
   }, [open]);
   return (
     <Modal
-      open={open}
+      visible={open}
       onCancel={handleCancel}
       title="관리자 생성"
       centered

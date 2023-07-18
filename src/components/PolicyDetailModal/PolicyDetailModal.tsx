@@ -2,7 +2,6 @@ import { useMutation } from '@apollo/client';
 import { Button, Input, Modal, notification, Popconfirm, Select } from 'antd';
 
 import React, { useEffect, useState } from 'react';
-import { PolicyType } from '../../utils/columns';
 import { Editor } from '../Editor';
 import TransformBox from '../TransformBox';
 
@@ -10,7 +9,7 @@ type Props = {
   open: boolean;
   handleCancel: () => void;
   isEdit: boolean;
-  data: PolicyType | undefined;
+  data: any | undefined;
   refetch: () => void;
   policyKind: KindType[];
 };
@@ -35,66 +34,11 @@ export function PolicyDetailModal({
       policyKindId,
     };
     if (!isEdit) {
-      // createPolicy({
-      //   variables: variables,
-      // });
+      // 생성 로직
     } else {
-      // updatePolicy({
-      //   variables: {
-      //     ...variables,
-      //     id: Number(data?.id ?? -1),
-      //   },
-      // });
+      //수정 로직
     }
   };
-
-  // create policy
-  // const [createPolicy] = useMutation<CreatePolicyResponse, CreatePolicyParams>(
-  //   CREATE_POLICY,
-  //   {
-  //     onCompleted: () => {
-  //       notification.success({ message: '약관을 생성했습니다.' });
-  //       handleCancel();
-  //       refetch();
-  //     },
-  //     onError: (e) => {
-  //       notification.error({ message: e.message });
-  //     },
-  //   },
-  // );
-
-  // update policy
-  // const [updatePolicy] = useMutation<UpdatePolicyResponse, UpdatePolicyParams>(
-  //   UPDATE_POLICY,
-  //   {
-  //     onCompleted: () => {
-  //       notification.success({ message: '약관을 수정했습니다.' });
-  //       handleCancel();
-  //       refetch();
-  //     },
-  //     onError: (e) => {
-  //       notification.error({ message: e.message });
-  //     },
-  //   },
-  // );
-
-  // delete policy
-  // const [deletePolicy] = useMutation<DeletePolicyResponse, DeletePolicyParams>(
-  //   DELETE_POLICY,
-  //   {
-  //     onCompleted: () => {
-  //       notification.success({ message: '약관을 삭제했습니다.' });
-  //       handleCancel();
-  //       refetch();
-  //     },
-  //     onError: (e) => {
-  //       notification.error({ message: e.message });
-  //     },
-  //     variables: {
-  //       id: data?.id ?? -1,
-  //     },
-  //   },
-  // );
 
   useEffect(() => {
     if (isEdit) {

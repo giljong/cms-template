@@ -4,7 +4,7 @@ import { Button, Divider, notification, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Chart } from '../../components/Chart';
-import { InquiryType, dashboardInquiryColumns } from '../../utils/columns';
+import { dashboardInquiryColumns } from '../../utils/columns';
 
 import * as S from './style';
 
@@ -25,7 +25,7 @@ type DashboardStats = {
 };
 
 export function Dashboard() {
-  const [inquiryData, setInquiryData] = useState<InquiryType[]>([]);
+  const [inquiryData, setInquiryData] = useState<any[]>([]);
   const [dashboardData, setDashboardData] = useState<DashboardStats>();
   const navigator = useNavigate();
 

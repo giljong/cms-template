@@ -3,8 +3,8 @@ type IsPaginationBaseParams = {
   skip: number;
 };
 
-type IsSearchTextBaseParams = {
-  searchText?: string;
+type IssearchWordBaseParams = {
+  searchWord?: string;
 } & IsPaginationBaseParams;
 
 type KindType = {

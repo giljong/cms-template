@@ -55,6 +55,12 @@ export function OtpInputModal({
     }
   }, [handleFinish, otp]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      if (inputRef.current.length) inputRef.current[0].focus();
+    }, 0);
+  }, [open]);
+
   return (
     <Modal
       open={open}
@@ -63,9 +69,11 @@ export function OtpInputModal({
       centered
       closable={false}
       width={800}
+      destroyOnClose={false}
+      forceRender={false}
     >
       <S.ModalTitle>OTP 인증번호</S.ModalTitle>
-      {loading && <Loader />}
+      <Loader visible={loading} />
       <S.OtpWrap>
         {otp.map((v, i) => (
           <S.OtpInput
@@ -77,7 +85,7 @@ export function OtpInputModal({
             key={i}
             maxLength={1}
             value={v}
-            autoFocus={!i}
+            autoFocus={true}
             onChange={handleChangeInput(i)}
             onKeyDown={(e) => {
               if (e.key === 'Backspace' && i !== 0 && !otp[i].length) {

@@ -2,7 +2,6 @@ import { useMutation } from '@apollo/client';
 import { Button, Input, Modal, notification, Popconfirm, Select } from 'antd';
 
 import React, { useEffect, useState } from 'react';
-import { FaqType } from '../../utils/columns';
 import { Editor } from '../Editor';
 import TransformBox from '../TransformBox';
 
@@ -10,7 +9,7 @@ type Props = {
   open: boolean;
   handleCancel: () => void;
   isEdit: boolean;
-  data: FaqType | undefined;
+  data: any | undefined;
   refetch: () => void;
   faqKind: KindType[];
 };
@@ -44,71 +43,13 @@ export function FaqDetailModal({
       faqKindId,
     };
     if (!isEdit) {
-      // createFaq({
-      //   variables,
-      // });
+      // 생성 로직
     } else {
-      // updateFaq({
-      //   variables: {
-      //     ...variables,
-      //     id: data?.id ?? -1,
-      //   },
-      // });
+      // 수정 로직
     }
   };
 
-  const handleDelete = () => {
-    // deleteFaq({
-    //   variables: {
-    //     id: data?.id ?? 0,
-    //   },
-    // });
-  };
-
-  // create faq
-  // const [createFaq] = useMutation<CreateFaqResponse, CreateFaqParams>(
-  //   CREATE_FAQ,
-  //   {
-  //     onCompleted: () => {
-  //       notification.success({ message: 'FAQ를 생성했습니다.' });
-  //       handleCancel();
-  //       refetch();
-  //     },
-  //     onError: (e) => {
-  //       notification.error({ message: e.message });
-  //     },
-  //   },
-  // );
-
-  // update faq
-  // const [updateFaq] = useMutation<UpdateFaqResponse, UpdateFaqParams>(
-  //   UPDATE_FAQ,
-  //   {
-  //     onCompleted: () => {
-  //       notification.success({ message: 'FAQ를 수정했습니다.' });
-  //       handleCancel();
-  //       refetch();
-  //     },
-  //     onError: (e) => {
-  //       notification.error({ message: e.message });
-  //     },
-  //   },
-  // );
-
-  // delete faq
-  // const [deleteFaq] = useMutation<DeleteFaqResponse, DeleteFaqParams>(
-  //   DELETE_FAQ,
-  //   {
-  //     onCompleted: () => {
-  //       notification.success({ message: 'FAQ를 삭제했습니다.' });
-  //       handleCancel();
-  //       refetch();
-  //     },
-  //     onError: (e) => {
-  //       notification.error({ message: e.message });
-  //     },
-  //   },
-  // );
+  const handleDelete = () => {};
 
   useEffect(() => {
     if (isEdit) {

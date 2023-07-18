@@ -1,26 +1,8 @@
 import { Tag } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import moment from 'moment';
-import { UserType } from '.';
 
-export type InquiryType = {
-  id: number;
-  inquiryKind: {
-    name: string;
-  };
-  content: string;
-  reportingDate: string;
-  processingDate?: string;
-  reply?: string;
-  user?: UserType;
-  createdAt?: string;
-  inquiryImages?: {
-    id: number;
-    name: string;
-  }[];
-};
-
-export const userInquiryColumns: ColumnsType<InquiryType> = [
+export const userInquiryColumns: ColumnsType<any> = [
   {
     title: 'ID',
     key: 'id',

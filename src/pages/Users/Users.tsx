@@ -1,72 +1,41 @@
 import { useLazyQuery } from '@apollo/client';
-import { Divider, Form, Input, notification, Table } from 'antd';
-
+import { Divider, Form, Input } from 'antd';
+import { useRecoilState } from 'recoil';
 import React, { useEffect, useState } from 'react';
 import { UserDetailModal } from '../../components/UserDetailModal';
-import { UserType, userListColumns } from '../../utils/columns';
+import { userListColumns } from '../../utils/columns';
+import { CustomTable } from '../../components/CustomTable';
+import { pageOptionState } from '../../recoil/atoms/pageOptions';
 
 export function Users() {
-  const [userData, setUserData] = useState<UserType[]>([]);
+  const [userData, setUserData] = useState<any[]>([]);
   const [open, setOpen] = useState(false);
-  const [modalData, setModalData] = useState<UserType>();
-  const [take, setTake] = useState(10);
-  const [skip, setSkip] = useState(0);
-  const [totalCount, setTotalCount] = useState(0);
-  const [current, setCurrent] = useState(1);
-  const [searchText, setSearchText] = useState('');
+  const [modalData, setModalData] = useState<any>();
+  const [searchWord, setSearchWord] = useState('');
+
+  const [pageOption, setPageOption] = useRecoilState(pageOptionState);
 
   const handleCancel = () => {
     setOpen(false);
   };
 
-  const handleClickRow = (rec: UserType) => {
+  const handleClickRow = (rec: any) => {
     setModalData(rec);
     setOpen(true);
   };
 
-  const handleSearch = (value: { searchText?: string }) => {
-    // seeAllUsers({
-    //   variables: {
-    //     take,
-    //     skip: 0,
-    //     ...value,
-    //   },
-    // });
-    setSkip(0);
-    setCurrent(1);
-    setSearchText(value.searchText ?? '');
+  const handleSearch = (value: { searchWord?: string }) => {
+    // TODO: 검색 로직
+    setPageOption({
+      ...pageOption,
+      current: 1,
+      skip: 0,
+    });
+    setSearchWord(value.searchWord ?? '');
   };
-
-  const handlePagination = (e: number) => {
-    setSkip((e - 1) * take);
-    setCurrent(e);
-  };
-
-  // get user list
-  // const [seeAllUsers, { loading }] = useLazyQuery<
-  //   SeeUserHistoryByAdminResponse,
-  //   SeeUserHistoryByAdminParams
-  // >(SEE_USER_HISTORY_BY_ADMIN, {
-  //   onCompleted: (data) => {
-  //     setUserData(data.seeUserHistoryByAdmin.users);
-  //     setTotalCount(data.seeUserHistoryByAdmin.totalCount);
-  //   },
-  //   onError: (e) => {
-  //     notification.error({ message: e.message });
-  //   },
-  //   fetchPolicy: 'no-cache',
-  // });
 
   // pagination
-  // useEffect(() => {
-  //   seeAllUsers({
-  //     variables: {
-  //       take,
-  //       skip,
-  //       searchText,
-  //     },
-  //   });
-  // }, [skip, take]);
+  useEffect(() => {}, [pageOption.skip, pageOption.take]);
 
   return (
     <>
@@ -77,38 +46,27 @@ export function Users() {
       />
       <Divider>회원</Divider>
       <Form layout="inline" onFinish={handleSearch}>
-        <Form.Item name="searchText">
+        <Form.Item name="searchWord">
           <Input.Search
             enterButton
             placeholder="검색어(아이디(이메일), 닉네임, 이름, 휴대폰)"
             onSearch={(e) => {
-              handleSearch({ searchText: e });
+              handleSearch({ searchWord: e });
             }}
           />
         </Form.Item>
       </Form>
-      <Table
+      <CustomTable
+        marginTop={30}
         columns={userListColumns}
         dataSource={userData}
-        pagination={{
-          position: ['bottomCenter'],
-          showSizeChanger: true,
-          onChange: handlePagination,
-          onShowSizeChange: (_current, size) => setTake(size),
-          total: totalCount,
-          current: current,
-        }}
         // loading={loading}
-        style={{
-          marginTop: 30,
-        }}
         onRow={(rec) => {
           return {
             onClick: () => handleClickRow(rec),
           };
         }}
         rowKey={(rec) => rec.email}
-        scroll={{ x: 800 }}
       />
     </>
   );

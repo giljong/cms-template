@@ -2,7 +2,6 @@ import { useMutation } from '@apollo/client';
 import { Button, Input, Modal, notification, Popconfirm, Switch } from 'antd';
 
 import React, { useEffect, useState } from 'react';
-import { NoticeType } from '../../utils/columns';
 import { Editor } from '../Editor';
 import TransformBox from '../TransformBox';
 
@@ -10,7 +9,7 @@ type Props = {
   open: boolean;
   handleCancel: () => void;
   isEdit: boolean;
-  data: NoticeType | undefined;
+  data: any | undefined;
   refetch: () => void;
 };
 
@@ -42,71 +41,13 @@ export function NoticeDetailModal({
       isFix,
     };
     if (!isEdit) {
-      // createNotice({
-      //   variables,
-      // });
+      // 생성 로직
     } else {
-      // updateNotice({
-      //   variables: {
-      //     ...variables,
-      //     id: data?.id ?? -1,
-      //   },
-      // });
+      // 수정 로직
     }
   };
 
-  const handleDelete = () => {
-    // deleteNotice({
-    //   variables: {
-    //     id: data?.id ?? -1,
-    //   },
-    // });
-  };
-
-  // create notice
-  // const [createNotice] = useMutation<CreateNoticeRespons, CreateNoticeParams>(
-  //   CREATE_NOTICE,
-  //   {
-  //     onCompleted: () => {
-  //       notification.success({ message: '공지사항을 등록했습니다' });
-  //       handleCancel();
-  //       refetch();
-  //     },
-  //     onError: (e) => {
-  //       notification.error({ message: e.message });
-  //     },
-  //   },
-  // );
-
-  // update notice
-  // const [updateNotice] = useMutation<UpdateNoticeResponse, UpdateNoticeParams>(
-  //   UPDATE_NOTICE,
-  //   {
-  //     onCompleted: () => {
-  //       notification.success({ message: '공지사항을 수정했습니다' });
-  //       handleCancel();
-  //       refetch();
-  //     },
-  //     onError: (e) => {
-  //       notification.error({ message: e.message });
-  //     },
-  //   },
-  // );
-
-  // delete notice
-  // const [deleteNotice] = useMutation<DeleteNoticeResponse, DeleteNoticeParams>(
-  //   DELETE_NOTICE,
-  //   {
-  //     onCompleted: () => {
-  //       notification.success({ message: '공지사항을 삭제했습니다' });
-  //       handleCancel();
-  //       refetch();
-  //     },
-  //     onError: (e) => {
-  //       notification.error({ message: e.message });
-  //     },
-  //   },
-  // );
+  const handleDelete = () => {};
 
   useEffect(() => {
     if (isEdit) {

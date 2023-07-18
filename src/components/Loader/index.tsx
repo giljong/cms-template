@@ -14,12 +14,19 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
 `;
-function Loader() {
+
+type Props = {
+  visible: boolean;
+};
+
+function Loader({ visible }: Props) {
   const antIcon = <LoadingOutlined style={{ fontSize: 45 }} spin />;
-  return (
+  return visible ? (
     <Container>
       <Spin indicator={antIcon} />
     </Container>
+  ) : (
+    <></>
   );
 }
 

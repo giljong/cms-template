@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { PRIMARY } from '../../styles/colors';
+import { Input } from 'antd';
 
 export const ModalTitle = styled.h2`
   color: ${PRIMARY};
@@ -20,7 +21,8 @@ export const OtpInput = styled.input`
   font-size: 46px;
   text-align: center;
   padding: 10px;
-  &:focus-open {
+
+  &:focus-visible {
     outline: none;
     padding: 0px;
     margin: 0px;

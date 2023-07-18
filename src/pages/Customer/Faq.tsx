@@ -1,34 +1,29 @@
 import { useLazyQuery, useQuery } from '@apollo/client';
-import { Button, Divider, Form, Input, notification, Table } from 'antd';
-
+import { Button, Divider, Form, Input, Table } from 'antd';
+import { useRecoilState } from 'recoil';
 import React, { useEffect, useState } from 'react';
 import { FaqDetailModal } from '../../components/FaqDetailModal';
 import TransformBox from '../../components/TransformBox';
-import { FaqType, faqColumns } from '../../utils/columns';
+import { faqColumns } from '../../utils/columns';
+import { pageOptionState } from '../../recoil/atoms/pageOptions';
+import { CustomTable } from '../../components/CustomTable';
 
 export function Faq() {
-  const [faqData, setFaqData] = useState<FaqType[]>([]);
+  const [faqData, setFaqData] = useState<any[]>([]);
   const [open, setOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
-  const [modalData, setModalData] = useState<FaqType>();
-  const [take, setTake] = useState(10);
-  const [skip, setSkip] = useState(0);
-  const [current, setCurrent] = useState(1);
-  const [totalCount, setTotalCount] = useState(0);
-  const [searchText, setSearchText] = useState('');
+  const [modalData, setModalData] = useState<any>();
+  const [searchWord, setSearchWord] = useState('');
   const [faqKind, setFaqKind] = useState<KindType[]>([]);
 
-  const handlePagination = (e: number) => {
-    setCurrent(e);
-    setSkip((e - 1) * take);
-  };
+  const [pageOption, setPageOption] = useRecoilState(pageOptionState);
 
   const handleClick = () => {
     setOpen(true);
     setIsEdit(false);
   };
 
-  const handleRow = (record: FaqType) => {
+  const handleRow = (record: any) => {
     setOpen(true);
     setIsEdit(true);
     setModalData(record);
@@ -40,7 +35,7 @@ export function Faq() {
 
   const handleRefetch = () => {
     // if (refetch) {
-    //   refetch({ searchText, skip, take })
+    //   refetch({ searchWord, skip, take })
     //     .then((data) => {
     //       setFaqData(data.data.seeFaqHistoryByAdmin.faqs);
     //       setTotalCount(data.data.seeFaqHistoryByAdmin.totalCount);
@@ -57,7 +52,7 @@ export function Faq() {
     // }
   };
 
-  const handleSearch = (value: { searchText?: string }) => {
+  const handleSearch = (value: { searchWord?: string }) => {
     // getFaqs({
     //   variables: {
     //     take,
@@ -65,9 +60,12 @@ export function Faq() {
     //     ...value,
     //   },
     // });
-    setCurrent(1);
-    setSkip(0);
-    setSearchText(value.searchText ?? '');
+    setPageOption({
+      ...pageOption,
+      current: 1,
+      skip: 0,
+    });
+    setSearchWord(value.searchWord ?? '');
   };
 
   // get faq list
@@ -102,7 +100,7 @@ export function Faq() {
   //     variables: {
   //       skip,
   //       take,
-  //       searchText,
+  //       searchWord,
   //     },
   //   });
   // }, [skip, take]);
@@ -119,13 +117,13 @@ export function Faq() {
       />
       <Divider>FAQ</Divider>
       <Form layout="inline" onFinish={handleSearch}>
-        <Form.Item name="searchText">
+        <Form.Item name="searchWord">
           <Input.Search
             enterButton
             placeholder="검색어(질문)"
             onSearch={(e) => {
               handleSearch({
-                searchText: e,
+                searchWord: e,
               });
             }}
           />
@@ -136,20 +134,10 @@ export function Faq() {
           FAQ 등록
         </Button>
       </TransformBox>
-      <Table
+      <CustomTable
         columns={faqColumns}
         dataSource={faqData}
-        pagination={{
-          position: ['bottomCenter'],
-          showSizeChanger: true,
-          onChange: handlePagination,
-          onShowSizeChange: (_current, size) => setTake(size),
-          total: totalCount,
-          current: current,
-        }}
-        style={{
-          marginTop: '30px',
-        }}
+        marginTop={30}
         onRow={(record) => {
           return {
             onClick: () => handleRow(record),
@@ -157,7 +145,6 @@ export function Faq() {
         }}
         // loading={loading}
         rowKey={(rec) => rec.id}
-        scroll={{ x: 800 }}
       />
     </>
   );
