@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { Menu } from 'antd';
-
+import { MenuOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import * as S from './style';
 import { getMenuItem } from '../../utils/menuItems';
@@ -22,11 +22,14 @@ export function AsideMenu() {
     subMenu: '',
     item: '',
   });
+  const [visible, setVisible] = useState(false);
 
   const [, setPageOption] = useRecoilState(pageOptionState);
 
   const navigator = useNavigate();
   const { pathname } = useLocation();
+
+  const isDesktop = window.innerWidth >= 1368;
 
   const handleLogout = () => {
     localStorage.setItem('accessToken', '');
@@ -92,20 +95,48 @@ export function AsideMenu() {
   }, [pathname]);
 
   return (
-    <S.Sider>
-      <S.ImageWrap onClick={handleMoveHome}>
-        <S.Image alt="logo" src={''} />
-      </S.ImageWrap>
+    <>
+      {visible && !isDesktop && (
+        <S.Mask
+          onClick={() => {
+            setVisible(false);
+            window.document.body.style.overflowY = 'auto';
+          }}
+        />
+      )}
+      {!isDesktop && (
+        <S.NavTop>
+          <S.MenuIcon>
+            <MenuOutlined
+              style={{
+                fontSize: 20,
+              }}
+              onClick={() => {
+                setVisible(true);
+                window.document.body.style.overflowY = 'hidden';
+              }}
+            />
+          </S.MenuIcon>
+          <img alt="로고" onClick={handleMoveHome} />
+        </S.NavTop>
+      )}
+      {(isDesktop || visible) && (
+        <S.Sider>
+          <S.ImageWrap onClick={handleMoveHome}>
+            <S.Image alt="로고" src={''} />
+          </S.ImageWrap>
 
-      <Menu
-        theme="dark"
-        mode="inline"
-        onClick={handleClickMenu}
-        onOpenChange={handleChangeSubMenu}
-        openKeys={[menu.subMenu ?? '']}
-        selectedKeys={[menu.item]}
-        items={getMenuItem(['MASTER'])}
-      />
-    </S.Sider>
+          <Menu
+            theme={isDesktop ? 'dark' : 'light'}
+            mode="inline"
+            onClick={handleClickMenu}
+            onOpenChange={handleChangeSubMenu}
+            openKeys={[menu.subMenu ?? '']}
+            selectedKeys={[menu.item]}
+            items={getMenuItem(['MASTER'])}
+          />
+        </S.Sider>
+      )}
+    </>
   );
 }

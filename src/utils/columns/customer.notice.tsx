@@ -1,20 +1,9 @@
 import { Tag } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import moment from 'moment';
+import { deleteTag } from '../deleteTag';
 
-export type NoticeType = {
-  id: number;
-  title: string;
-  content: string;
-
-  isFix: boolean;
-  admin: {
-    name: string;
-  };
-  createdAt: string;
-};
-
-export const noticeColumns: ColumnsType<NoticeType> = [
+export const noticeColumns: ColumnsType<any> = [
   {
     title: 'no',
     key: 'id',
@@ -33,7 +22,9 @@ export const noticeColumns: ColumnsType<NoticeType> = [
     dataIndex: 'content',
     align: 'center',
     render: (val: string) => {
-      return val.length > 40 ? val.substr(0, 40) + '...' : val;
+      return deleteTag(val).length > 40
+        ? deleteTag(val).slice(0, 40) + '...'
+        : deleteTag(val);
     },
   },
 

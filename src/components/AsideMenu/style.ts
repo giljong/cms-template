@@ -13,13 +13,13 @@ export const Container = styled.section`
 
 export const ImageWrap = styled.div`
   width: 100%;
-  margin: 0.75em auto;
+  margin: 1.25em auto;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  @media only screen and (max-width: 768px) {
-    margin: 0;
+  @media ${(props) => props.theme.mobile} {
+    margin: 20px;
     margin-left: 20px;
     justify-content: flex-start;
     align-items: flex-start;
@@ -28,8 +28,8 @@ export const ImageWrap = styled.div`
 `;
 
 export const Image = styled.img`
-  width: 40%;
-  height: 40%;
+  width: 60%;
+  height: 60%;
   /* object-fit: cover; */
 `;
 
@@ -44,7 +44,11 @@ export const Layout = styled(AntdLayout)<LayoutProps>`
 export const Sider = styled(AntdSider)`
   overflow: auto;
   height: 100vh;
-  position: fixed !important;
+  position: fixed;
+  @media ${(props) => props.theme.mobile} {
+    background: #fff;
+    z-index: 10001;
+  }
 `;
 
 export const Content = styled(AntdContent)`
@@ -63,17 +67,15 @@ type NavProps = {
 export const NavTop = styled.div<NavProps>`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  button {
-    background: transparent;
-    border: none;
-  }
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.1);
+
   position: fixed;
   top: 0;
-  z-index: 1000;
-  height: 50px;
-  /* background: ${(props) => (props.isOpen ? '#fff' : 'transparent')}; */
+  z-index: 99;
+  height: 60px;
+  padding: 15px;
   background: #fff;
 `;
 
@@ -85,5 +87,10 @@ export const Mask = styled.div`
   left: 0;
   background-color: #000;
   opacity: 0.5;
-  z-index: 1;
+  z-index: 999;
+`;
+
+export const MenuIcon = styled.div`
+  position: absolute;
+  left: 15px;
 `;

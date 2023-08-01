@@ -15,7 +15,6 @@ export function CustomTable<T extends object>({
   const [pageOption, setPageOption] = useRecoilState(pageOptionState);
   return (
     <AntdTable
-      {...props}
       pagination={{
         position: ['bottomCenter'],
         showSizeChanger: true,
@@ -38,6 +37,7 @@ export function CustomTable<T extends object>({
         marginTop,
       }}
       scroll={{ x: scrollWidth }}
+      {...props}
     />
   );
 }

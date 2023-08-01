@@ -1,5 +1,7 @@
 import { ColumnsType } from 'antd/lib/table';
 import moment from 'moment';
+import { deleteTag } from '../deleteTag';
+import { Link } from 'react-router-dom';
 
 export type PolicyType = {
   id: number;
@@ -22,9 +24,9 @@ export const policyColumns: ColumnsType<PolicyType> = [
     align: 'center',
   },
   {
-    title: '약관 종류',
-    key: 'policyKind',
-    dataIndex: 'policyKind',
+    title: <Link to={'/policy/category'}>약관 종류</Link>,
+    key: 'policyCategory',
+    dataIndex: 'policyCategory',
     align: 'center',
     render: (val: { name: string }) => {
       return val.name;
@@ -36,7 +38,9 @@ export const policyColumns: ColumnsType<PolicyType> = [
     dataIndex: 'content',
     align: 'center',
     render: (val: string) => {
-      return val.length > 40 ? val.substr(0, 40) + '...' : val;
+      return deleteTag(val).length > 40
+        ? deleteTag(val).slice(0, 40) + '...'
+        : deleteTag(val);
     },
   },
   {

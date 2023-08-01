@@ -1,18 +1,8 @@
 import { ColumnsType } from 'antd/lib/table';
 import moment from 'moment';
+import { deleteTag } from '../deleteTag';
 
-export type FaqType = {
-  id: number;
-  question: string;
-  answer: string;
-  faqKind: KindType;
-  admin: {
-    name: string;
-  };
-  createdAt: string;
-};
-
-export const faqColumns: ColumnsType<FaqType> = [
+export const faqColumns: ColumnsType<any> = [
   {
     title: 'no',
     key: 'id',
@@ -40,7 +30,9 @@ export const faqColumns: ColumnsType<FaqType> = [
     dataIndex: 'answer',
     align: 'center',
     render: (val: string) => {
-      return val.length > 40 ? val.substr(0, 40) + '...' : val;
+      return deleteTag(val).length > 40
+        ? deleteTag(val).slice(0, 40) + '...'
+        : deleteTag(val);
     },
   },
   {

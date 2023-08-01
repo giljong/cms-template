@@ -1,4 +1,3 @@
-import { Input } from 'antd';
 import styled from 'styled-components';
 import { PRIMARY } from '../../styles/colors';
 
@@ -9,7 +8,7 @@ export const Container = styled.main`
   background: ${PRIMARY};
   display: flex;
   justify-content: center;
-  @media only screen and (max-width: 768px) {
+  @media ${(props) => props.theme.mobile} {
     background: #fff;
     padding: 20px;
   }
@@ -20,8 +19,9 @@ export const Wrapper = styled.section`
   justify-content: center;
   align-items: center;
   width: 100%;
+  flex-direction: column;
 
-  @media only screen and (max-width: 768px) {
+  @media ${(props) => props.theme.mobile} {
   }
 `;
 
@@ -29,12 +29,16 @@ export const Button = styled.button`
   width: 100%;
   background-color: ${PRIMARY};
   border: 0;
-  height: 2rem;
+  height: 60px;
   cursor: pointer;
   color: #fff;
   font-weight: bold;
-  @media only screen and (max-width: 768px) {
+  font-size: 18px;
+  border-radius: 10px;
+  margin-top: 10px;
+  @media ${(props) => props.theme.mobile} {
     border: 0;
+    height: 46px;
   }
 `;
 
@@ -45,25 +49,24 @@ export const ImageWrap = styled.div`
 `;
 
 export const Image = styled.img`
-  width: 60%;
-  height: 60%;
-  object-fit: contain;
-  @media only screen and (max-width: 768px) {
-    width: 70%;
-    height: 70%;
-  }
-`;
+  width: 100%;
 
-export const CustomInput = styled(Input)`
-  @media only screen and (max-width: 768px) {
-    width: 50%;
-    height: 50%;
+  object-fit: contain;
+  @media ${(props) => props.theme.mobile} {
+    width: 70%;
   }
 `;
 
 export const FormWrap = styled.div`
+  border: 1px solid #dcdcdc;
   background: #fff;
-  padding: 20px;
-
+  padding: 30px;
+  min-width: 500px;
+  width: 30vw;
   border-radius: 10px;
+  @media ${(props) => props.theme.mobile} {
+    min-width: 0;
+    width: 100%;
+    max-width: 500px;
+  }
 `;
